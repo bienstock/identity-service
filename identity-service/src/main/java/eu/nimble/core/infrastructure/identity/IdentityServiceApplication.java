@@ -25,12 +25,11 @@ import java.net.URISyntaxException;
 @Configuration
 @EnableDiscoveryClient
 @SpringBootApplication
-//@EntityScan({"eu.nimble.service.model", "eu.nimble.core.infrastructure.identity.entity"})
 @EntityScan(basePackageClasses = {UaaUser.class, PartyType.class, PersonType.class, ActivityDataLineType.class, CodeType.class})
 @EnableAutoConfiguration
 public class IdentityServiceApplication extends SpringBootServletInitializer {
 
-    @Value("${nimble.cors_enabled}")
+    @Value("${nimble.cors_enabled:}")
     private String corsEnabled;
 
     @Bean
