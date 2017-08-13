@@ -28,8 +28,8 @@ node ('nimble-jenkins-slave') {
     }
     stage ('Build and push docker image') {
         sh '''cd identity-service
-              ./deploy.sh docker-build
-              ./deploy.sh docker-push'''
+              /bin/bash -xe deploy.sh docker-build
+              /bin/bash -xe deploy.sh docker-push'''
     }
 }
 
