@@ -22,7 +22,7 @@ node ('nimble-jenkins-slave') {
             }
         }
     }*/
-    stage ('Clean WS & Clone' {
+    stage ('Clean WS & Clone') {
         deleteDir()
         sh 'git clone --recursive https://github.com/nimble-platform/identity-service'
     }
