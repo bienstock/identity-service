@@ -27,8 +27,9 @@ node ('nimble-jenkins-slave') {
         sh 'git clone --recursive https://github.com/nimble-platform/identity-service'
     }
     stage ('Build and push docker image') {
-        sh '${WORKSPACE}/identity-service/deploy.sh docker-build'
-        sh '${WORKSPACE}/identity-service/deploy.sh docker-push'
+        sh '''cd identity-service
+              ./deploy.sh docker-build
+              ./deploy.sh docker-push'''
     }
 }
 
