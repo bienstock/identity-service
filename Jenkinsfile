@@ -9,6 +9,7 @@ node ('nimble-jenkins-slave') {
           sh 'mvn clean install -DskipTests'
         }
     }
+    // bla
     stage ('Docker Build') {
         withMaven(maven: 'M339') {
             sh 'mvn -f identity-service/pom.xml docker:build'
