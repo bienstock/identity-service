@@ -32,6 +32,7 @@ node ('nimble-jenkins-slave') {
     }
     stage ('Push docker image') {
         withDockerRegistry([credentialsId: 'NimbleDocker']) {
+            sh' docker tag nimbleplatform/identity-service:latest nimbleplatform/identity-service:bienstock'
             sh 'docker push nimbleplatform/identity-service:bienstock'
         }
     }
