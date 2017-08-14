@@ -36,5 +36,30 @@ node ('nimble-jenkins-slave') {
             sh 'docker push nimbleplatform/identity-service:bienstock'
         }
     }
+    stage ('Deploy') {
+        sh '''kubectl apply -f kubernetes/deploy.yaml'''
+    }
+    stage ('Test Deployment') {
+        sh '''kubectl apply -f kubernetes/deploy.yaml
+                i=0
+                function readinessTest ()
+                {
+                    readyReplicas=$(kubectl get deploy --namespace=prod identity-service  -o jsonpath='{.status.updatedReplicas})
+                    if [[ $readyReplicas -ge 1 ]]
+                    then
+                      echo "Deployed Successfully"
+                      exit 0
+                    elif [[ $i -gt 60 ]]
+                    then
+                      exit 1
+                    else
+                      sleep 5
+                      (( i++ ))
+                      readinessTest
+                    fi
+                }
+
+                readinessTest'''
+    }
 }
 
