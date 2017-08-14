@@ -23,27 +23,5 @@ node ('nimble-jenkins-slave') {
     stage ('Deploy') {
         sh '''kubectl apply -f kubernetes/deploy.yaml -n prod --validate=false'''
     }
-    stage ('Test Deployment') {
-        sh '''
-                i=0
-                function readinessTest ()
-                {
-                    readyReplicas=$(kubectl get deploy --namespace=prod identity-service  -o jsonpath='{.status.updatedReplicas})
-                    if [[ $readyReplicas -ge 1 ]]
-                    then
-                      echo "Deployed Successfully"
-                      exit 0
-                    elif [[ $i -gt 60 ]]
-                    then
-                      exit 1
-                    else
-                      sleep 5
-                      (( i++ ))
-                      readinessTest
-                    fi
-                }
-
-                readinessTest'''
-    }
 }
 
