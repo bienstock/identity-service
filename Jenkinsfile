@@ -24,7 +24,7 @@ node ('nimble-jenkins-slave') {
         sh ''' kubectl apply -f kubernetes/deploy.yaml -n prod'''
     }
     stage ('Test Deployment') {
-        sh '''kubectl apply -f kubernetes/deploy.yaml
+        sh '''kubectl apply -f kubernetes/deploy.yaml --validate=false
                 i=0
                 function readinessTest ()
                 {
