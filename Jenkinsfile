@@ -37,11 +37,10 @@ node ('nimble-jenkins-slave') {
         }
     }
     stage ('Deploy') {
-        sh '''pwd
-              kubectl apply -f kubernetes/deploy.yaml -n prod'''
+        sh ''' kubectl apply -f identity-service/kubernetes/deploy.yaml -n prod'''
     }
     stage ('Test Deployment') {
-        sh '''kubectl apply -f kubernetes/deploy.yaml
+        sh '''kubectl apply -f identity-service/kubernetes/deploy.yaml
                 i=0
                 function readinessTest ()
                 {
