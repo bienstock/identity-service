@@ -12,8 +12,7 @@ node ('nimble-jenkins-slave') {
         sh 'git clone --recursive https://github.com/nimble-platform/identity-service'
     }*/
     stage ('Build docker image') {
-        sh '''cd identity-service
-              /bin/bash -xe deploy.sh docker-build'''
+        sh '''/bin/bash -xe deploy.sh docker-build'''
     }
     stage ('Push docker image') {
         withDockerRegistry([credentialsId: 'NimbleDocker']) {
@@ -22,10 +21,10 @@ node ('nimble-jenkins-slave') {
         }
     }
     stage ('Deploy') {
-        sh ''' kubectl apply -f identity-service/kubernetes/deploy.yaml -n prod'''
+        sh ''' kubectl apply -f kubernetes/deploy.yaml -n prod'''
     }
     stage ('Test Deployment') {
-        sh '''kubectl apply -f identity-service/kubernetes/deploy.yaml
+        sh '''kubectl apply -f kubernetes/deploy.yaml
                 i=0
                 function readinessTest ()
                 {
